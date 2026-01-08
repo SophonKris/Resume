@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简历 - 田智宇</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/resume.css">
+</head>
+<body>
+    <div class="container">
+        <div class="resume-content">
+            <div class="content-left">
+                <div class="statement-card">
+                    <h2>声明</h2>
+                    <div class="statement-text">
+                        <p>本人从23年开始至今处于GAP状态。从23年与朋友做AI logo设计，后因行业内卷被迫解散。后陆续从事一些产品咨询、自媒体等个人工作。目前在做一些AI 0代码 嵌入式物联网DIY项目。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-right">
+                <div class="prd-card" onclick="openFullscreen()">
+                    <div class="prd-icon">
+                        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="120" height="120" rx="12" fill="#1890FF"/>
+                            <path d="M30 40H90V50H30V40Z" fill="white"/>
+                            <path d="M30 55H75V65H30V55Z" fill="white"/>
+                            <path d="M30 70H85V80H30V70Z" fill="white"/>
+                            <circle cx="85" cy="85" r="8" fill="white"/>
+                        </svg>
+                    </div>
+                    <h3>脱敏PRD样例</h3>
+                    <p class="prd-tip">在PC端浏览体验最佳</p>
+                    <button class="prd-link" onclick="openFullscreen()">
+                        点击查看文档
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 全屏模式覆盖层 -->
+    <div class="fullscreen-overlay" id="fullscreenOverlay">
+        <div class="fullscreen-content">
+            <div class="fullscreen-header">
+                <h3 class="fullscreen-title">脱敏PRD样例文档</h3>
+                <button class="close-btn" onclick="closeFullscreen()">返回</button>
+            </div>
+            <iframe class="fullscreen-iframe" id="fullscreenIframe" src=""></iframe>
+        </div>
+    </div>
+    
+    <script src="js/resume.js"></script>
+    <script>
+        // 简化版访问频率检查
+        function checkAccessLimit() {
+            const now = Date.now();
+            const oneMinute = 60 * 1000;
+            const tenMinutes = 10 * 60 * 1000;
+            const accessKey = 'simple_access_log';
+            const cooldownKey = 'simple_cooldown';
+            
+            // 检查是否在冷却期
+            const cooldownEnd = localStorage.getItem(cooldownKey);
+            if (cooldownEnd && now < parseInt(cooldownEnd)) {
+                showCooldownMessage(parseInt(cooldownEnd) - now);
+                return false;
+            }
+            
+            // 获取访问记录
+            const accessLog = JSON.parse(localStorage.getItem(accessKey) || '[]');
+            
+            // 清理超过1分钟的记录
+            const recentAccess = accessLog.filter(time => now - time < oneMinute);
+            
+            // 检查是否超过限制（每分钟最多5次）
+            if (recentAccess.length >= 5) {
+                // 设置10分钟冷却期
+                localStorage.setItem(cooldownKey, (now + tenMinutes).toString());
+                showCooldownMessage(tenMinutes);
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function recordAccess() {
+            const now = Date.now();
+            const accessKey = 'simple_access_log';
+            
+            // 获取访问记录
+            const accessLog = JSON.parse(localStorage.getItem(accessKey) || '[]');
+            
+            // 添加当前访问时间
+            accessLog.push(now);
+            
+            // 只保留最近1分钟的记录
+            const oneMinute = 60 * 1000;
+            const recentAccess = accessLog.filter(time => now - time < oneMinute);
+            
+            // 保存更新后的记录
+            localStorage.setItem(accessKey, JSON.stringify(recentAccess));
+        }
+        
+        function showCooldownMessage(remainingTime) {
+            const minutes = Math.ceil(remainingTime / (60 * 1000));
+            document.body.innerHTML = `
+                <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f5f5f5; font-family: Arial, sans-serif;">
+                    <div style="text-align: center; padding: 40px; background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 500px;">
+                        <h2 style="color: #e74c3c; margin-bottom: 20px;">⏰ 访问限制</h2>
+                        <p style="color: #666; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+                            您的操作过于频繁或验证失败次数过多。
+                        </p>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 30px;">
+                            请等待约 ${minutes} 分钟后再试。
+                        </p>
+                        <p style="color: #999; font-size: 12px; margin-bottom: 20px;">
+                            限制规则：每分钟最多访问 5 次
+                        </p>
+                        <button onclick="location.reload()" style="
+                            background-color: #3498db;
+                            color: white;
+                            border: none;
+                            padding: 12px 24px;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            font-size: 16px;
+                        ">刷新页面</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 页面加载时检查访问限制
+        document.addEventListener('DOMContentLoaded', function() {
+            if (checkAccessLimit()) {
+                recordAccess();
+            }
+        });
+    </script>
+</body>
+</html>

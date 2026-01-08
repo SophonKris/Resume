@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>身份验证 - 田智宇个人简历</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <div class="container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>身份验证</h1>
+                <p class="auth-subtitle">请输入本人中文名验证（简化版）</p>
+            </div>
+            
+            <div class="auth-form">
+                <div class="input-group">
+                    <input type="text" id="nameInput" placeholder="请输入中文姓名" maxlength="10" autocomplete="off">
+                    <button id="verifyBtn" class="verify-btn">验证</button>
+                </div>
+                
+                <div class="attempt-info">
+                    <span id="attemptCount">剩余尝试次数：2</span>
+                </div>
+                
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+                <div id="successMessage" class="success-message" style="display: none;"></div>
+            </div>
+            <div class="auth-footer" style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px; border-left: 4px solid #007bff;">
+                <p style="margin: 0; font-size: 14px; color: #666; line-height: 1.5;">
+                    <strong></strong>本网站均为本人使用AI IDE 0代码生成。同时仅用于个人用途，请黑客们手下留情！
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/auth-simple.js"></script>
+</body>
+</html>

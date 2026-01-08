@@ -1,0 +1,402 @@
+/* 简历页面样式 */
+.resume-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    width: 100%;
+    max-width: 1000px;
+    align-items: start;
+}
+
+.content-left,
+.content-right {
+    height: 100%;
+}
+
+.statement-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.statement-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #1890ff 0%, #40a9ff 100%);
+}
+
+.statement-card h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1890ff;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.statement-text {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.statement-text p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #333;
+    text-align: justify;
+    letter-spacing: 0.5px;
+}
+
+.prd-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.prd-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.prd-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #1890ff 0%, #40a9ff 100%);
+}
+
+.prd-icon {
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+}
+
+.prd-card:hover .prd-icon {
+    transform: scale(1.05);
+}
+
+.prd-card h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1890ff;
+    margin-bottom: 12px;
+}
+
+.prd-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.prd-tip {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 24px;
+    font-style: italic;
+}
+
+.prd-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 32px;
+    background: #1890ff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+    position: relative;
+    overflow: hidden;
+}
+
+.prd-link:hover {
+    background: #40a9ff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(24, 144, 255, 0.15);
+}
+
+.prd-link:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+}
+
+.prd-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+/* 全屏模式样式 */
+.fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                visibility 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fullscreen-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.fullscreen-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.85);
+    width: calc(100vw - 40px);
+    height: calc(100vh - 40px);
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.fullscreen-overlay.active .fullscreen-content {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.fullscreen-header {
+    padding: 20px 30px;
+    border-bottom: 1px solid #e8e8e8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fafafa;
+}
+
+.fullscreen-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1890ff;
+    margin: 0;
+}
+
+.close-btn {
+    background: #ff4d4f;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: #ff7875;
+    transform: translateY(-1px);
+}
+
+.fullscreen-iframe {
+    flex: 1;
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        min-height: 100vh;
+        align-items: stretch;
+    }
+    
+    .resume-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        height: 100vh;
+    }
+    
+    .statement-card {
+        padding: 25px 20px;
+        flex: 0.6; /* 缩短声明区块高度 */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .prd-card {
+        padding: 25px 20px;
+        flex: 1.4; /* 增加PRD区块高度 */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .statement-card h2 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+    
+    .prd-card h3 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    
+    .statement-text p {
+        font-size: 19px; /* 增大字体 */
+        line-height: 1.7; /* 稍微紧凑行距 */
+    }
+    
+    .prd-tip {
+        font-size: 14px;
+        color: #999;
+        margin-bottom: 15px;
+        font-style: italic;
+    }
+    
+    .prd-link {
+        font-size: 18px;
+        padding: 14px 28px;
+    }
+    
+    .prd-icon svg {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .fullscreen-content {
+        width: calc(100vw - 40px);
+        height: calc(100vh - 40px);
+    }
+    
+    .fullscreen-header {
+        padding: 15px 20px;
+    }
+    
+    .fullscreen-title {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .resume-content {
+        gap: 10px;
+    }
+    
+    .statement-card {
+        padding: 20px 15px;
+        min-height: calc(30vh - 10px); /* 缩短声明区块高度 */
+    }
+    
+    .prd-card {
+        padding: 20px 15px;
+        min-height: calc(70vh - 10px); /* 增加PRD区块高度 */
+    }
+    
+    .statement-card h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+    
+    .prd-card h3 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .statement-text p {
+        font-size: 17px; /* 增大字体 */
+        line-height: 1.6; /* 稍微紧凑行距 */
+    }
+    
+    .prd-tip {
+        font-size: 13px;
+        color: #999;
+        margin-bottom: 10px;
+        font-style: italic;
+    }
+    
+    .prd-link {
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+    
+    .prd-icon svg {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .fullscreen-content {
+        width: calc(100vw - 30px);
+        height: calc(100vh - 30px);
+        border-radius: 12px;
+    }
+    
+    .fullscreen-header {
+        padding: 12px 15px;
+    }
+    
+    .fullscreen-title {
+        font-size: 15px;
+    }
+    
+    .close-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.statement-card,
+.prd-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.prd-card {
+    animation-delay: 0.2s;
+}
