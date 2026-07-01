@@ -673,10 +673,11 @@ body {
         font-size: 10px;
         color: #cbd5e1;
         white-space: nowrap;
+        margin-bottom: 0;
     }
 
     .identity-block .title {
-        margin-top: -4px;
+        margin-top: 0;
     }
 
     .sidebar-bottom .contact-block {

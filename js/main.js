@@ -149,10 +149,24 @@ function initGalleryControls() {
         const imgs = track.querySelectorAll('img');
         let index = 0;
 
+        function updateNavState() {
+            if (prevBtn) {
+                prevBtn.disabled = index === 0;
+                prevBtn.style.opacity = index === 0 ? '0.35' : '1';
+                prevBtn.style.cursor = index === 0 ? 'not-allowed' : 'pointer';
+            }
+            if (nextBtn) {
+                nextBtn.disabled = index === imgs.length - 1;
+                nextBtn.style.opacity = index === imgs.length - 1 ? '0.35' : '1';
+                nextBtn.style.cursor = index === imgs.length - 1 ? 'not-allowed' : 'pointer';
+            }
+        }
+
         function show(i) {
-            index = (i + imgs.length) % imgs.length;
+            index = Math.max(0, Math.min(i, imgs.length - 1));
             track.style.transform = `translateX(-${index * 100}%)`;
             dots.forEach((d, j) => d.classList.toggle('active', j === index));
+            updateNavState();
         }
 
         if (prevBtn) {
@@ -161,6 +175,8 @@ function initGalleryControls() {
         if (nextBtn) {
             nextBtn.addEventListener('click', e => { e.stopPropagation(); show(index + 1); });
         }
+
+        updateNavState();
 
         gallery.addEventListener('touchstart', function (e) {
             this.startX = e.touches[0].clientX;
