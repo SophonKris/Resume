@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>田智宇 - 个人商务名片</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        html.token-checking body { display: none; }
+    </style>
+    <script>
+        // Verify token before rendering the page
+        (function () {
+            document.documentElement.classList.add('token-checking');
+            fetch('/api/check-token', { credentials: 'same-origin' })
+                .then(function (res) {
+                    if (!res.ok) {
+                        window.location.replace('/index.html');
+                    } else {
+                        document.documentElement.classList.remove('token-checking');
+                    }
+                })
+                .catch(function () {
+                    window.location.replace('/index.html');
+                });
+        })();
+    </script>
+</head>
+<body>
+
+    <!-- 商务名片 -->
+    <div class="card-wrapper">
+        <div class="card-container">
+            <!-- 左侧身份栏 -->
+            <div class="card-sidebar">
+                <div class="identity-block">
+                    <div class="name" id="card-name"></div>
+                    <div class="title" id="card-titles"></div>
+                </div>
+                <div class="sidebar-top-contact">
+                    <img class="contact-qr" src="career.krisgeek.com.png" alt="微信二维码">
+                    <div class="contact-tel">TEL：19822603772</div>
+                </div>
+                <div class="sidebar-bottom">
+                    <div class="contact-block">
+                        <div class="contact-tel">TEL：19822603772</div>
+                        <img class="contact-qr" src="career.krisgeek.com.png" alt="微信二维码">
+                    </div>
+                    <div class="sidebar-footer" id="card-footer"></div>
+                </div>
+            </div>
+
+            <!-- 右侧内容区 -->
+            <div class="card-content">
+                <!-- 核心服务 -->
+                <div class="section">
+                    <div class="section-title">核心服务</div>
+                    <div class="service-grid" id="card-services"></div>
+                </div>
+
+                <!-- 核心优势 -->
+                <div class="section">
+                    <div class="section-title">核心优势</div>
+                    <div class="advantage-wrap" id="card-advantages"></div>
+                </div>
+
+                <!-- 项目经验 -->
+                <div class="section experience-section">
+                    <div class="section-title">项目经验</div>
+                    <div class="stats-row" id="card-stats"></div>
+                    <div class="experience-note" id="card-background"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRD 文档区 -->
+    <section class="list-section" id="prd-section">
+        <div class="list-section-header">
+            <div class="section-icon">📄</div>
+            <h2>PRD 文档</h2>
+        </div>
+        <div class="list-grid"></div>
+    </section>
+
+    <!-- 作品集区 -->
+    <section class="list-section" id="portfolio-section">
+        <div class="list-section-header">
+            <div class="section-icon">🎨</div>
+            <h2>作品集</h2>
+        </div>
+        <div class="list-grid"></div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+        <p>&copy; 2026 OPC · 田智宇</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

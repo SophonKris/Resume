@@ -1,0 +1,10 @@
+{
+    "functions": {
+        "api/verify.js": {
+            "maxDuration": 5
+        },
+        "api/check-token.js": {
+            "maxDuration": 5
+        }
+    }
+}
