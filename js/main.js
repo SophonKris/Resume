@@ -239,7 +239,7 @@ function initDetailPage() {
 
 /* ========== 初始化 ========== */
 document.addEventListener('DOMContentLoaded', function () {
-    if (document.getElementById('prd-section')) {
+    if (document.getElementById('portfolio-section')) {
         initHomePage();
     } else if (document.getElementById('detail-content')) {
         initDetailPage();
