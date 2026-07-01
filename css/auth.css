@@ -156,7 +156,23 @@ body {
         flex-direction: column;
     }
 
+    .input-group input {
+        flex: none;
+        width: 100%;
+        height: 48px;
+        font-size: 16px;
+    }
+
     .verify-btn {
         width: 100%;
+        height: 48px;
+    }
+
+    .attempt-info {
+        text-align: center;
+    }
+
+    .auth-footer {
+        display: none;
     }
 }

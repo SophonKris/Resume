@@ -78,7 +78,7 @@ const SITE_DATA = {
                 '设计架构支持百万级订单全链路数据埋点、业务计算、模型归因',
                 '超前规划，各模块标准化且解耦性强，支持业务快速迭代扩展'
             ],
-            detailUrl: 'https://krisgeek.com'
+            detailUrl: 'https://my.feishu.cn/docx/DywWdNmD3oCnAIxqbWAcQqrDnvb'
         }
     ]
 };
@@ -98,6 +98,9 @@ function renderPortfolioList() {
         const detailBtn = item.detailUrl
             ? `<a href="${item.detailUrl}" target="_blank" class="portfolio-detail">查看详情 →</a>`
             : '';
+        const navBtns = images.length > 1
+            ? `<button class="gallery-nav prev" aria-label="上一张">‹</button><button class="gallery-nav next" aria-label="下一张">›</button>`
+            : '';
 
         return `
             <div class="portfolio-card">
@@ -105,7 +108,7 @@ function renderPortfolioList() {
                     <div class="gallery-track">
                         ${images.map(src => `<img src="${src}" alt="${item.title}" loading="lazy">`).join('')}
                     </div>
-                    ${images.length > 1 ? `<button class="gallery-next" aria-label="下一张">›</button>` : ''}
+                    ${navBtns}
                     ${images.length > 1 ? `<div class="gallery-dots">${images.map((_, i) => `<span class="dot${i === 0 ? ' active' : ''}"></span>`).join('')}</div>` : ''}
                 </div>
                 <div class="portfolio-info">
@@ -140,7 +143,8 @@ function discoverImages(folder) {
 function initGalleryControls() {
     document.querySelectorAll('.portfolio-gallery').forEach(gallery => {
         const track = gallery.querySelector('.gallery-track');
-        const nextBtn = gallery.querySelector('.gallery-next');
+        const prevBtn = gallery.querySelector('.gallery-nav.prev');
+        const nextBtn = gallery.querySelector('.gallery-nav.next');
         const dots = gallery.querySelectorAll('.gallery-dots .dot');
         const imgs = track.querySelectorAll('img');
         let index = 0;
@@ -151,8 +155,11 @@ function initGalleryControls() {
             dots.forEach((d, j) => d.classList.toggle('active', j === index));
         }
 
+        if (prevBtn) {
+            prevBtn.addEventListener('click', e => { e.stopPropagation(); show(index - 1); });
+        }
         if (nextBtn) {
-            nextBtn.addEventListener('click', () => show(index + 1));
+            nextBtn.addEventListener('click', e => { e.stopPropagation(); show(index + 1); });
         }
 
         gallery.addEventListener('touchstart', function (e) {
@@ -163,7 +170,62 @@ function initGalleryControls() {
             const diff = this.startX - e.changedTouches[0].clientX;
             if (Math.abs(diff) > 40) show(index + (diff > 0 ? 1 : -1));
         }, { passive: true });
+
+        imgs.forEach(img => {
+            img.addEventListener('click', () => openLightbox(gallery));
+        });
     });
+}
+
+function openLightbox(gallery) {
+    const track = gallery.querySelector('.gallery-track');
+    const imgs = Array.from(track.querySelectorAll('img'));
+    let current = 0;
+
+    const lightbox = document.createElement('div');
+    lightbox.className = 'image-lightbox';
+    lightbox.innerHTML = `
+        <button class="lightbox-close" aria-label="关闭">&times;</button>
+        ${imgs.length > 1 ? '<button class="lightbox-nav prev" aria-label="上一张">&#8249;</button>' : ''}
+        <img src="${imgs[0].src}" alt="${imgs[0].alt || ''}">
+        ${imgs.length > 1 ? '<button class="lightbox-nav next" aria-label="下一张">&#8250;</button>' : ''}
+    `;
+    document.body.appendChild(lightbox);
+
+    const imgEl = lightbox.querySelector('img');
+
+    function update(i) {
+        current = (i + imgs.length) % imgs.length;
+        imgEl.src = imgs[current].src;
+    }
+
+    lightbox.querySelector('.lightbox-close').addEventListener('click', close);
+    lightbox.addEventListener('click', e => {
+        if (e.target === lightbox) close();
+    });
+
+    const prev = lightbox.querySelector('.lightbox-nav.prev');
+    const next = lightbox.querySelector('.lightbox-nav.next');
+    if (prev) prev.addEventListener('click', () => update(current - 1));
+    if (next) next.addEventListener('click', () => update(current + 1));
+
+    document.addEventListener('keydown', handleKey);
+
+    requestAnimationFrame(() => lightbox.classList.add('active'));
+
+    function close() {
+        lightbox.classList.remove('active');
+        document.removeEventListener('keydown', handleKey);
+        setTimeout(() => lightbox.remove(), 200);
+    }
+
+    function handleKey(e) {
+        if (e.key === 'Escape') close();
+        if (imgs.length > 1) {
+            if (e.key === 'ArrowLeft') update(current - 1);
+            if (e.key === 'ArrowRight') update(current + 1);
+        }
+    }
 }
 
 function renderCard() {

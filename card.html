@@ -8,23 +8,7 @@
     <style>
         html.token-checking body { display: none; }
     </style>
-    <script>
-        // Verify token before rendering the page
-        (function () {
-            document.documentElement.classList.add('token-checking');
-            fetch('/api/check-token', { credentials: 'same-origin' })
-                .then(function (res) {
-                    if (!res.ok) {
-                        window.location.replace('/index.html');
-                    } else {
-                        document.documentElement.classList.remove('token-checking');
-                    }
-                })
-                .catch(function () {
-                    window.location.replace('/index.html');
-                });
-        })();
-    </script>
+    <!-- 验证逻辑已临时移除，确认无误后恢复 -->
 </head>
 <body>
 
@@ -38,13 +22,13 @@
                     <div class="title" id="card-titles"></div>
                 </div>
                 <div class="sidebar-top-contact">
-                    <img class="contact-qr" src="career.krisgeek.com.png" alt="微信二维码">
+                    <img class="contact-qr" src="image/httpcareer.krisgeek.com.png" alt="微信二维码">
                     <div class="contact-tel">TEL：19822603772</div>
                 </div>
                 <div class="sidebar-bottom">
                     <div class="contact-block">
                         <div class="contact-tel">TEL：19822603772</div>
-                        <img class="contact-qr" src="career.krisgeek.com.png" alt="微信二维码">
+                        <img class="contact-qr" src="image/httpcareer.krisgeek.com.png" alt="微信二维码">
                     </div>
                     <div class="sidebar-footer" id="card-footer"></div>
                 </div>
