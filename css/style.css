@@ -258,7 +258,7 @@ body {
 
 /* ========== 内容列表区（PRD / 作品集） ========== */
 .list-section {
-    max-width: 720px;
+    max-width: 980px;
     margin: 0 auto;
     padding: 0 20px 40px;
 }
@@ -288,97 +288,151 @@ body {
     font-size: 16px;
 }
 
-.list-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+.portfolio-list {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
 }
 
-.list-card {
+.portfolio-card {
     background: #fff;
-    border-radius: 12px;
-    padding: 24px;
+    border-radius: 16px;
+    overflow: hidden;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     border: 1px solid #e2e8f0;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    text-decoration: none;
-    color: inherit;
-    display: block;
+    display: flex;
 }
 
-.list-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 28px rgba(37, 99, 235, 0.12);
-    border-color: #93c5fd;
-}
-
-.list-card.coming-soon {
-    opacity: 0.6;
-    cursor: default;
+.portfolio-gallery {
+    width: 40%;
+    min-width: 280px;
     position: relative;
+    overflow: hidden;
+    background: #f1f5f9;
+    aspect-ratio: 9 / 16;
 }
 
-.list-card.coming-soon:hover {
-    transform: none;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-    border-color: #e2e8f0;
+.gallery-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.3s ease;
 }
 
-.list-card .card-badge {
-    display: inline-block;
-    padding: 3px 10px;
-    background: #eff6ff;
-    color: #2563eb;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 600;
-    margin-bottom: 12px;
+.gallery-track img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
 }
 
-.list-card.coming-soon .card-badge {
-    background: #fef3c7;
-    color: #92400e;
+.gallery-next {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    color: #1e293b;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
-.list-card .card-title {
-    font-size: 16px;
-    font-weight: 600;
+.gallery-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+}
+
+.gallery-dots .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.gallery-dots .dot.active {
+    background: #fff;
+}
+
+.portfolio-info {
+    flex: 1;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-title {
+    font-size: 22px;
+    font-weight: 700;
     color: #0f172a;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
-.list-card .card-desc {
-    font-size: 13px;
-    color: #64748b;
-    line-height: 1.5;
-    margin-bottom: 14px;
-}
-
-.list-card .card-tags {
+.portfolio-tags {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    margin-bottom: 18px;
 }
 
-.list-card .tag {
-    padding: 3px 10px;
-    background: #f1f5f9;
-    color: #475569;
-    border-radius: 12px;
-    font-size: 11px;
-}
-
-.list-card .card-arrow {
-    float: right;
-    color: #94a3b8;
-    font-size: 18px;
-    margin-top: -4px;
-    transition: color 0.2s;
-}
-
-.list-card:hover .card-arrow {
+.portfolio-tags .tag {
+    padding: 4px 12px;
+    background: #eff6ff;
     color: #2563eb;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.portfolio-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 16px 0 8px;
+    padding-left: 10px;
+    border-left: 3px solid #2563eb;
+}
+
+.portfolio-section-title:first-of-type {
+    margin-top: 0;
+}
+
+.portfolio-list-items {
+    margin: 0;
+    padding-left: 18px;
+    color: #475569;
+    font-size: 13.5px;
+    line-height: 1.7;
+}
+
+.portfolio-list-items li {
+    margin-bottom: 6px;
+}
+
+.portfolio-detail {
+    margin-top: 18px;
+    align-self: flex-start;
+    color: #2563eb;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.portfolio-detail:hover {
+    color: #1d4ed8;
 }
 
 /* ========== 页脚 ========== */
@@ -590,5 +644,28 @@ body {
 
     .list-section {
         padding: 0 16px 40px;
+    }
+
+    .portfolio-card {
+        flex-direction: column;
+    }
+
+    .portfolio-gallery {
+        width: 100%;
+        min-width: unset;
+        aspect-ratio: 9 / 16;
+        max-height: 420px;
+    }
+
+    .portfolio-info {
+        padding: 20px 22px;
+    }
+
+    .portfolio-title {
+        font-size: 18px;
+    }
+
+    .portfolio-list-items {
+        font-size: 13px;
     }
 }

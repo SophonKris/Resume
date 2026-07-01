@@ -28,20 +28,142 @@ const SITE_DATA = {
             '为10+企业或个人提供业务数字化与产品架构设计咨询，业务覆盖电商、AI agent、SaaS、小程序等。'
         ]
     },
-    prds: [
-        { id: 1, title: '示例PRD文档', desc: '脱敏后的产品需求文档样例', tags: ['PRD', '产品'], url: '' },
-        { id: 2, title: '示例PRD文档2', desc: '另一个脱敏PRD样例', tags: ['PRD', '需求'], url: '' }
-    ],
     portfolios: [
-        { id: 1, title: '作品集占位', desc: '即将上线', tags: ['小程序'], url: '', status: 'coming' }
+        {
+            id: 1,
+            title: '某工具型小程序',
+            tags: ['微信小程序', 'AI工具'],
+            folder: 'work1',
+            intro: [
+                '面向某细分场景的工具产品，高性能前后端架构设计，并实现动画渲染、会员体系搭建等高级功能',
+                'AI赋能，在超低token消耗前提下，实现AI语音识别，AI洞察报告等超前功能',
+                '最高日活1w+，用户100%好评，同品类小程序第一'
+            ],
+            highlights: [
+                '产品驱动设计，有别于常见码农的简单功能堆砌，本产品UX交互体验同品类TOP',
+                '同品类工具中唯一深入挖掘AI赋能场景并落地的小程序',
+                '独立cover从概念设计到最后的运营迭代，真正的OPC全栈项目'
+            ],
+            detailUrl: ''
+        },
+        {
+            id: 2,
+            title: '某AI知识库分身项目',
+            tags: ['多端部署', 'AI工具', '无向量架构'],
+            folder: 'work2',
+            intro: [
+                '面向职场、KOL等多场景的个人 AI知识分身项目，同时兼备知识库、数字分身、多端部署等优点',
+                '自研架构，基于双轨知识表征和karpathy三层wiki理论构建，原文语料库事实级溯源，有效解决传统知识库幻觉问题',
+                '内置多锚点主动洞察与滚动记忆流机制，支持跨文档知识一致性校验与长周期知识关联与偏好演化'
+            ],
+            highlights: [
+                '轻量纯自研架构：无向量RAG轻量化方案、不基于目前任意主流框架暗改（如Dify）',
+                '平衡效果与成本：两层知识蒸馏抽取方案，并发粗筛+全局认知精抽，大幅降低Token成本',
+                '可支持微信云原生 Serverless 部署，缓存友好型 Prompt 设计，多租户数据隔离，低成本快速定制落地'
+            ],
+            detailUrl: ''
+        },
+        {
+            id: 3,
+            title: '某公司营销业务系统设计项目',
+            tags: ['电商营销系统', '全流程数据资产梳理'],
+            folder: 'work3',
+            intro: [
+                '面向某公司电商营销场景的IT系统支持，包括联盟、KOL、广告投流等渠道建设',
+                '从站外引流到最终成单支付全流程数据梳理，重建埋点体系',
+                '设计多渠道归因模型并接入多渠道整合营销机制，并重构相关数据报表'
+            ],
+            highlights: [
+                '定制基于客观情况，根据公司实际业务调研，不套模版只做最合适的设计',
+                '设计架构支持百万级订单全链路数据埋点、业务计算、模型归因',
+                '超前规划，各模块标准化且解耦性强，支持业务快速迭代扩展'
+            ],
+            detailUrl: 'https://krisgeek.com'
+        }
     ]
 };
 
 /* ========== 主页逻辑 ========== */
 function initHomePage() {
     renderCard();
-    renderList('prd-section', SITE_DATA.prds, 'prd');
-    renderList('portfolio-section', SITE_DATA.portfolios, 'portfolio');
+    renderPortfolioList();
+}
+
+function renderPortfolioList() {
+    const list = document.querySelector('#portfolio-section .portfolio-list');
+    if (!list) return;
+
+    list.innerHTML = SITE_DATA.portfolios.map(item => {
+        const images = discoverImages(item.folder);
+        const detailBtn = item.detailUrl
+            ? `<a href="${item.detailUrl}" target="_blank" class="portfolio-detail">查看详情 →</a>`
+            : '';
+
+        return `
+            <div class="portfolio-card">
+                <div class="portfolio-gallery">
+                    <div class="gallery-track">
+                        ${images.map(src => `<img src="${src}" alt="${item.title}" loading="lazy">`).join('')}
+                    </div>
+                    ${images.length > 1 ? `<button class="gallery-next" aria-label="下一张">›</button>` : ''}
+                    ${images.length > 1 ? `<div class="gallery-dots">${images.map((_, i) => `<span class="dot${i === 0 ? ' active' : ''}"></span>`).join('')}</div>` : ''}
+                </div>
+                <div class="portfolio-info">
+                    <div class="portfolio-title">${item.title}</div>
+                    <div class="portfolio-tags">
+                        ${item.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+                    </div>
+                    <div class="portfolio-section-title">项目介绍</div>
+                    <ul class="portfolio-list-items">
+                        ${item.intro.map(t => `<li>${t}</li>`).join('')}
+                    </ul>
+                    <div class="portfolio-section-title">优势亮点</div>
+                    <ul class="portfolio-list-items">
+                        ${item.highlights.map(t => `<li>${t}</li>`).join('')}
+                    </ul>
+                    ${detailBtn}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    initGalleryControls();
+}
+
+function discoverImages(folder) {
+    const knownCounts = { work1: 2, work2: 2, work3: 1 };
+    const ext = folder === 'work3' ? 'png' : 'jpg';
+    const count = knownCounts[folder] || 0;
+    return Array.from({ length: count }, (_, i) => `image/${folder}/${i + 1}.${ext}`);
+}
+
+function initGalleryControls() {
+    document.querySelectorAll('.portfolio-gallery').forEach(gallery => {
+        const track = gallery.querySelector('.gallery-track');
+        const nextBtn = gallery.querySelector('.gallery-next');
+        const dots = gallery.querySelectorAll('.gallery-dots .dot');
+        const imgs = track.querySelectorAll('img');
+        let index = 0;
+
+        function show(i) {
+            index = (i + imgs.length) % imgs.length;
+            track.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((d, j) => d.classList.toggle('active', j === index));
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => show(index + 1));
+        }
+
+        gallery.addEventListener('touchstart', function (e) {
+            this.startX = e.touches[0].clientX;
+        }, { passive: true });
+
+        gallery.addEventListener('touchend', function (e) {
+            const diff = this.startX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 40) show(index + (diff > 0 ? 1 : -1));
+        }, { passive: true });
+    });
 }
 
 function renderCard() {
@@ -68,30 +190,6 @@ function renderCard() {
 
     const bgHtml = `<ul>${d.experienceTags.map(t => `<li>${t}</li>`).join('')}</ul>`;
     document.getElementById('card-background').innerHTML = bgHtml;
-}
-
-function renderList(containerId, items, type) {
-    const grid = document.querySelector(`#${containerId} .list-grid`);
-    if (!grid) return;
-
-    grid.innerHTML = items.map(item => {
-        const isComing = item.status === 'coming';
-        const badgeText = isComing ? '即将上线' : (type === 'prd' ? 'PRD' : '作品');
-        const cardClass = isComing ? 'list-card coming-soon' : 'list-card';
-        const href = isComing ? 'javascript:void(0)' : `detail.html?type=${type}&id=${item.id}`;
-
-        return `
-            <a href="${href}" class="${cardClass}">
-                <span class="card-badge">${badgeText}</span>
-                <span class="card-arrow">→</span>
-                <div class="card-title">${item.title}</div>
-                <div class="card-desc">${item.desc}</div>
-                <div class="card-tags">
-                    ${item.tags.map(t => `<span class="tag">${t}</span>`).join('')}
-                </div>
-            </a>
-        `;
-    }).join('');
 }
 
 /* ========== 详情页逻辑 ========== */
