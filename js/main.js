@@ -31,17 +31,17 @@ const SITE_DATA = {
     portfolios: [
         {
             id: 1,
-            title: '某工具型小程序',
+            title: '某AI工具型小程序',
             tags: ['微信小程序', 'AI工具'],
             folder: 'work1',
             intro: [
                 '面向某细分场景的工具产品，高性能前后端架构设计，并实现动画渲染、会员体系搭建等高级功能',
-                'AI赋能，在超低token消耗前提下，实现AI语音识别，AI洞察报告等超前功能',
+                'AI赋能，在超低token消耗前提下，实现AI智能意图识别与自动执行、ASR语音识别，AI洞察报告等同行业前沿能力',
                 '最高日活1w+，用户100%好评，同品类小程序第一'
             ],
             highlights: [
                 '产品驱动设计，有别于常见码农的简单功能堆砌，本产品UX交互体验同品类TOP',
-                '同品类工具中唯一深入挖掘AI赋能场景并落地的小程序',
+                '同品类工具中唯一原生AI驱动设计，且结合传统用户使用习惯的项目',
                 '独立cover从概念设计到最后的运营迭代，真正的OPC全栈项目'
             ],
             detailUrl: ''
@@ -79,6 +79,36 @@ const SITE_DATA = {
                 '超前规划，各模块标准化且解耦性强，支持业务快速迭代扩展'
             ],
             detailUrl: 'https://my.feishu.cn/docx/DywWdNmD3oCnAIxqbWAcQqrDnvb'
+        },
+        {
+            id: 4,
+            title: 'ERP小工单管理中间件',
+            tags: ['ERP-MES集成', '工单扫码作业', '数据溯源'],
+            folder: 'work4',
+            intro: [
+                '某工厂 ERP 的生产订单与制造现场结合的中间件，支持工人扫码开工、扫码完工，合格报废情况记录，数据实时同步回ERP'
+            ],
+            highlights: [
+                '灵活定制，性价比高：从0到1调研客户实际业务场景，方案完全量身定制同时比同类标品价格更低',
+                '支持断网作业：车间网络经常不稳定，工人扫码后先存本地，网络恢复自动补传，不影响生产节奏'
+            ],
+            detailUrl: ''
+        },
+        {
+            id: 5,
+            title: '某司AI招标管理系统',
+            tags: ['标书分析', '标书稽核', '企业知识库'],
+            folder: 'work5',
+            intro: [
+                '面向某司内部的招投标场景的AI支持，包括招标解读、制作和稽核等流程',
+                '梳理企业内部旧有的招投标知识资产，形成相对标准的知识库',
+                '实际跑测效果：商务标人时节省80%，技术标节省50%以上'
+            ],
+            highlights: [
+                '基于公司内部需求要求按需定制，拒绝通用模版，打造适配业务的系统方案',
+                '因地制宜，不搞复杂严密的知识库系统，综合考虑公司当前条件下人机协同的效率甜点'
+            ],
+            detailUrl: ''
         }
     ]
 };
@@ -134,8 +164,8 @@ function renderPortfolioList() {
 }
 
 function discoverImages(folder) {
-    const knownCounts = { work1: 2, work2: 2, work3: 1 };
-    const ext = folder === 'work3' ? 'png' : 'jpg';
+    const knownCounts = { work1: 3, work2: 2, work3: 1, work4: 1, work5: 2 };
+    const ext = (folder === 'work3' || folder === 'work4' || folder === 'work5') ? 'png' : 'jpg';
     const count = knownCounts[folder] || 0;
     return Array.from({ length: count }, (_, i) => `image/${folder}/${i + 1}.${ext}`);
 }
