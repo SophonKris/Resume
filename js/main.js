@@ -123,7 +123,7 @@ function renderPortfolioList() {
     const list = document.querySelector('#portfolio-section .portfolio-list');
     if (!list) return;
 
-    list.innerHTML = SITE_DATA.portfolios.map(item => {
+    list.innerHTML = SITE_DATA.portfolios.filter(item => item.folder !== 'work5').map(item => {
         const images = discoverImages(item.folder);
         const detailBtn = item.detailUrl
             ? `<a href="${item.detailUrl}" target="_blank" class="portfolio-detail">查看详情 →</a>`
