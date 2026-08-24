@@ -65,7 +65,7 @@ const SITE_DATA = {
         },
         {
             id: 3,
-            title: '某公司营销业务系统设计项目',
+            title: '某司跨境营销业务设计项目',
             tags: ['电商营销系统', '全流程数据资产梳理'],
             folder: 'work3',
             intro: [
